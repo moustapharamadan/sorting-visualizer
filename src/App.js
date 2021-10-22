@@ -1,11 +1,18 @@
 import "./App.css";
+import "bootstrap/dist/css/bootstrap.css";
+import configureStore from "./Redux/store";
+import { Provider } from "react-redux";
 import SortingVisualizer from "./Visualizer/SortingVisualizer";
+import SettingsFrame from "./Visualizer/SettingsFrame";
+
+const store = configureStore();
 
 function App() {
   return (
-    <div className="App">
+    <Provider store={store}>
+      <SettingsFrame />
       <SortingVisualizer />
-    </div>
+    </Provider>
   );
 }
 

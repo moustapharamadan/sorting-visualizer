@@ -16,3 +16,15 @@
   border: 0 none;
   display: inline-block;
 }
+
+.react-switch {
+  vertical-align: middle;
+  margin-left: 4px;
+}
+
+.sort-container {
+  position: relative;
+  margin: 0px 30px 0px 0px;
+  height: 78vh;
+  width: 100%;
+}

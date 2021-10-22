@@ -1,51 +1,65 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import * as actions from "../Redux/actions";
+import { resetArray } from "../Algorithms/Algorithms";
 import "./styles.css";
-
-export default class SortingVisualizer extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { array: [] };
-  }
-
+export class SortingVisualizer extends Component {
   componentDidMount() {
-    this.resetArray();
+    this.props.updateDataArray(resetArray(this.props.dataArraySize));
   }
 
   componentWillUnmount() {
-    this.setState({ array: [] });
-  }
-
-  resetArray() {
-    const array = [];
-    for (let i = 0; i < 100; i++) {
-      array.push(getRandomFloat(1, 100));
-    }
-    this.setState({ array });
+    this.props.updateDataArray([]);
   }
 
   render() {
+    debugger;
     return (
-      <div>
-        {/* {this.state.array.map((value, index) => (
-          <div
-            className="horizontal-bar"
-            key={index}
-            style={{ width: value + "%" }}
-          ></div>
-        ))} */}
-
-        {this.state.array.map((value, index) => (
-          <div
-            className="vertical-bar"
-            key={index}
-            style={{ height: value + "vh" }}
-          ></div>
-        ))}
+      <div className="sort-container">
+        {this.props.isHorizontalDirection
+          ? this.props.dataArray.map((row) => (
+              <div
+                className="horizontal-bar"
+                key={row.id}
+                style={{
+                  width: row.value + "%",
+                  height: 100 / this.props.dataArraySize + "%",
+                }}
+              ></div>
+            ))
+          : this.props.dataArray.map((column) => (
+              <div
+                className="vertical-bar"
+                key={column.id}
+                style={{
+                  width: 100 / this.props.dataArraySize + "%",
+                  height: column.value + "%",
+                }}
+              ></div>
+            ))}
       </div>
     );
   }
 }
 
-function getRandomFloat(min, max) {
-  return Math.random() * (max - min + 1) + min;
-}
+SortingVisualizer.propTypes = {
+  dataArray: PropTypes.array.isRequired,
+  dataArraySize: PropTypes.number.isRequired,
+  isHorizontalDirection: PropTypes.bool.isRequired,
+  updateDataArray: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => {
+  return {
+    dataArray: state.dataArray,
+    isHorizontalDirection: state.isHorizontalDirection,
+    dataArraySize: state.dataArraySize,
+  };
+};
+
+const mapDispatchToProps = {
+  updateDataArray: actions.updateDataArray,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SortingVisualizer);
