@@ -8,7 +8,15 @@ import Switch from "react-switch";
 class SettingsFrame extends Component {
   render() {
     return (
-      <div>
+      <div
+        className="btn-group"
+        role="group"
+        aria-label="Basic example"
+        style={{
+          display: "flex",
+          margin: "0 5%",
+        }}
+      >
         <label>
           <span>Horizontal Array</span>
           <Switch
@@ -19,44 +27,46 @@ class SettingsFrame extends Component {
             className="react-switch"
           />
         </label>
-        <div className="btn-group" role="group" aria-label="Basic example">
-          <button
-            className="btn btn-primary"
-            type="submit"
-            onClick={() =>
-              this.props.updateDataArray(resetArray(this.props.dataArraySize))
-            }
-          >
-            Generate New Array
-          </button>
-          <div className="form-group">
-            <label htmlFor="formControlRange">Number of Elements</label>
-            <input
-              type="range"
-              className="form-control-range"
-              id="formControlRange"
-              min="5"
-              max="1000"
-              onInput={(event) => {
-                this.props.updateDataArraySize(event.target.value);
-                this.props.updateDataArray(resetArray(event.target.value));
-              }}
-            />
-            <span id="rangeval">{this.props.dataArraySize}</span>
-          </div>
-          <button className="btn btn-primary" type="submit" onClick={() => {}}>
-            Merge Sort
-          </button>
-          <button className="btn btn-primary" type="submit" onClick={() => {}}>
-            Quick Sort
-          </button>
-          <button className="btn btn-primary" type="submit" onClick={() => {}}>
-            Heap Sort
-          </button>
-          <button className="btn btn-primary" type="submit" onClick={() => {}}>
-            Bubble Sort
-          </button>
+        <div
+          style={{
+            margin: "0 10px",
+          }}
+        >
+          <label htmlFor="formControlRange">Number of Elements</label>
+          <input
+            type="range"
+            className="form-control-range"
+            id="formControlRange"
+            min="5"
+            max="1000"
+            onInput={(event) => {
+              this.props.updateDataArraySize(event.target.value);
+              this.props.updateDataArray(resetArray(event.target.value));
+            }}
+          />
+          <span id="rangeval">{this.props.dataArraySize}</span>
         </div>
+        <button
+          className="btn btn-primary"
+          type="submit"
+          onClick={() =>
+            this.props.updateDataArray(resetArray(this.props.dataArraySize))
+          }
+        >
+          Generate New Array
+        </button>
+        <button className="btn btn-primary" type="submit" onClick={() => {}}>
+          Merge Sort
+        </button>
+        <button className="btn btn-primary" type="submit" onClick={() => {}}>
+          Quick Sort
+        </button>
+        <button className="btn btn-primary" type="submit" onClick={() => {}}>
+          Heap Sort
+        </button>
+        <button className="btn btn-primary" type="submit" onClick={() => {}}>
+          Bubble Sort
+        </button>
       </div>
     );
   }
