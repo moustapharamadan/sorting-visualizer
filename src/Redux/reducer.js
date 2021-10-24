@@ -9,6 +9,9 @@ export default function reducer(state = initialState, action) {
       return { ...state, isHorizontalDirection: !state.isHorizontalDirection };
     case types.UPDATE_DATA_ARRAY_SIZE:
       return { ...state, dataArraySize: action.dataArraySize };
+    case types.IS_SORT_RUNNING:
+      debugger;
+      return { ...state, isSortRunning: !state.isSortRunning };
     default:
       return state;
   }

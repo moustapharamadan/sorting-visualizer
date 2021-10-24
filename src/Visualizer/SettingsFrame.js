@@ -45,6 +45,7 @@ class SettingsFrame extends Component {
                 resetArray(parseInt(event.target.value))
               );
             }}
+            disabled={this.props.isSortRunning}
           />
           <span id="rangeval">{this.props.dataArraySize}</span>
         </div>
@@ -54,6 +55,7 @@ class SettingsFrame extends Component {
           onClick={() =>
             this.props.updateDataArray(resetArray(this.props.dataArraySize))
           }
+          disabled={this.props.isSortRunning}
         >
           Generate New Array
         </button>
@@ -62,18 +64,34 @@ class SettingsFrame extends Component {
           type="submit"
           onClick={() => {
             const array = [...this.props.dataArray];
-            mergeSort(array, this.props.updateDataArray);
+            mergeSort(array);
           }}
+          disabled={this.props.isSortRunning}
         >
           Merge Sort
         </button>
-        <button className="btn btn-primary" type="submit" onClick={() => {}}>
+        <button
+          className="btn btn-primary"
+          type="submit"
+          onClick={() => {}}
+          disabled={this.props.isSortRunning}
+        >
           Quick Sort
         </button>
-        <button className="btn btn-primary" type="submit" onClick={() => {}}>
+        <button
+          className="btn btn-primary"
+          type="submit"
+          onClick={() => {}}
+          disabled={this.props.isSortRunning}
+        >
           Heap Sort
         </button>
-        <button className="btn btn-primary" type="submit" onClick={() => {}}>
+        <button
+          className="btn btn-primary"
+          type="submit"
+          onClick={() => {}}
+          disabled={this.props.isSortRunning}
+        >
           Bubble Sort
         </button>
       </div>
@@ -85,6 +103,7 @@ SettingsFrame.propTypes = {
   dataArray: PropTypes.array.isRequired,
   dataArraySize: PropTypes.number.isRequired,
   isHorizontalDirection: PropTypes.bool.isRequired,
+  isSortRunning: PropTypes.bool.isRequired,
   updateDataArray: PropTypes.func.isRequired,
   togglePlotDirection: PropTypes.func.isRequired,
 };
@@ -94,6 +113,7 @@ const mapStateToProps = (state) => {
     dataArray: state.dataArray,
     dataArraySize: state.dataArraySize,
     isHorizontalDirection: state.isHorizontalDirection,
+    isSortRunning: state.isSortRunning,
   };
 };
 

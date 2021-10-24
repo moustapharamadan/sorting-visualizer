@@ -3,4 +3,5 @@ export default {
   dataArray: [],
   isHorizontalDirection: true,
   dataArraySize: 20,
+  isSortRunning: false,
 };

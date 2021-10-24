@@ -1,3 +1,6 @@
+import { store } from "../Redux/store";
+import { toggleIsSortRunning, updateDataArray } from "../Redux/actions";
+
 function getRandomFloat(min, max) {
   return Math.random() * (max - min + 1) + min;
 }
@@ -13,7 +16,7 @@ export function resetArray(size) {
 
 const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 
-async function merge(array, start, mid, end, updateDataArray) {
+async function merge(array, start, mid, end) {
   const tmp = [];
   let i = start;
   let j = mid + 1;
@@ -36,43 +39,23 @@ async function merge(array, start, mid, end, updateDataArray) {
   }
   for (let k = start; k <= end; k++) {
     array[k] = tmp[k - start];
-    updateDataArray([...array]);
-    await sleep(1000 / array.size);
+    store.dispatch(updateDataArray([...array]));
+    await sleep(10000 / array.size);
   }
   return array;
 }
 
-async function mergeSortInternal(array, start, end, updateDataArray) {
-  debugger;
+async function mergeSortInternal(array, start, end) {
   if (start < end) {
     const mid = parseInt((end + start) / 2, 10);
-    await mergeSortInternal(array, start, mid, updateDataArray);
-    await mergeSortInternal(array, mid + 1, end, updateDataArray);
-    array = await merge(array, start, mid, end, updateDataArray);
+    await mergeSortInternal(array, start, mid);
+    await mergeSortInternal(array, mid + 1, end);
+    array = await merge(array, start, mid, end);
   }
-  return array;
 }
 
-export function mergeSort(array, updateDataArray) {
-  return mergeSortInternal(array, 0, array.length - 1, updateDataArray);
+export async function mergeSort(array) {
+  store.dispatch(toggleIsSortRunning());
+  await mergeSortInternal(array, 0, array.length - 1);
+  store.dispatch(toggleIsSortRunning());
 }
-
-// function merge(left, right) {
-//   const result = [];
-//   while (left.length && right.length) {
-//     if (left[0] < right[0]) {
-//       result.push(left.shift());
-//     } else {
-//       result.push(right.shift());
-//     }
-//   }
-//   return [...result, ...left, ...right];
-// }
-
-// export function mergeSort(array) {
-//   if (array.length < 2) return array;
-
-//   const mid = array.length / 2;
-//   const left = array.splice(array, mid);
-//   return merge(mergeSort(left), mergeSort(array));
-// }

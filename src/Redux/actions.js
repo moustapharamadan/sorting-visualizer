@@ -11,3 +11,7 @@ export function togglePlotDirection() {
 export function updateDataArraySize(dataArraySize) {
   return { type: types.UPDATE_DATA_ARRAY_SIZE, dataArraySize };
 }
+
+export function toggleIsSortRunning() {
+  return { type: types.IS_SORT_RUNNING };
+}
