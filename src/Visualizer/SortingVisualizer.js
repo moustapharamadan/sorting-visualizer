@@ -14,27 +14,26 @@ export class SortingVisualizer extends Component {
   }
 
   render() {
-    debugger;
     return (
       <div className="sort-container">
         {this.props.isHorizontalDirection
-          ? this.props.dataArray.map((row) => (
+          ? this.props.dataArray.map((value, index) => (
               <div
                 className="horizontal-bar"
-                key={row.id}
+                key={index}
                 style={{
-                  width: row.value + "%",
+                  width: value + "%",
                   height: 100 / this.props.dataArraySize + "%",
                 }}
               ></div>
             ))
-          : this.props.dataArray.map((column) => (
+          : this.props.dataArray.map((value, index) => (
               <div
                 className="vertical-bar"
-                key={column.id}
+                key={index}
                 style={{
                   width: 100 / this.props.dataArraySize + "%",
-                  height: column.value + "%",
+                  height: value + "%",
                 }}
               ></div>
             ))}

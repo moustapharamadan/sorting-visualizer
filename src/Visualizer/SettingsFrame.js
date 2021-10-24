@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import * as actions from "../Redux/actions";
-import { resetArray } from "../Algorithms/Algorithms";
+import { resetArray, mergeSort } from "../Algorithms/Algorithms";
 import Switch from "react-switch";
 
 class SettingsFrame extends Component {
@@ -40,8 +40,10 @@ class SettingsFrame extends Component {
             min="5"
             max="1000"
             onInput={(event) => {
-              this.props.updateDataArraySize(event.target.value);
-              this.props.updateDataArray(resetArray(event.target.value));
+              this.props.updateDataArraySize(parseInt(event.target.value));
+              this.props.updateDataArray(
+                resetArray(parseInt(event.target.value))
+              );
             }}
           />
           <span id="rangeval">{this.props.dataArraySize}</span>
@@ -55,7 +57,14 @@ class SettingsFrame extends Component {
         >
           Generate New Array
         </button>
-        <button className="btn btn-primary" type="submit" onClick={() => {}}>
+        <button
+          className="btn btn-primary"
+          type="submit"
+          onClick={() => {
+            const array = [...this.props.dataArray];
+            mergeSort(array, this.props.updateDataArray);
+          }}
+        >
           Merge Sort
         </button>
         <button className="btn btn-primary" type="submit" onClick={() => {}}>
@@ -73,6 +82,7 @@ class SettingsFrame extends Component {
 }
 
 SettingsFrame.propTypes = {
+  dataArray: PropTypes.array.isRequired,
   dataArraySize: PropTypes.number.isRequired,
   isHorizontalDirection: PropTypes.bool.isRequired,
   updateDataArray: PropTypes.func.isRequired,
@@ -81,6 +91,7 @@ SettingsFrame.propTypes = {
 
 const mapStateToProps = (state) => {
   return {
+    dataArray: state.dataArray,
     dataArraySize: state.dataArraySize,
     isHorizontalDirection: state.isHorizontalDirection,
   };
