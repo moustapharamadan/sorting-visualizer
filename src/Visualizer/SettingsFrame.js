@@ -22,6 +22,7 @@ class SettingsFrame extends Component {
         style={{
           display: "flex",
           margin: "0 5%",
+          marginBottom: "1%",
         }}
       >
         <label>
@@ -57,7 +58,7 @@ class SettingsFrame extends Component {
           <span id="rangeval">{this.props.dataArraySize}</span>
         </div>
         <button
-          className="btn btn-primary"
+          className="btn btn-outline-primary"
           type="submit"
           onClick={() =>
             this.props.updateDataArray(resetArray(this.props.dataArraySize))
@@ -67,7 +68,7 @@ class SettingsFrame extends Component {
           Generate New Array
         </button>
         <button
-          className="btn btn-primary"
+          className="btn btn-outline-primary"
           type="submit"
           onClick={() => {
             const array = [...this.props.dataArray];
@@ -78,7 +79,7 @@ class SettingsFrame extends Component {
           Merge Sort
         </button>
         <button
-          className="btn btn-primary"
+          className="btn btn-outline-primary"
           type="submit"
           onClick={() => {
             const array = [...this.props.dataArray];
@@ -89,7 +90,7 @@ class SettingsFrame extends Component {
           Quick Sort
         </button>
         <button
-          className="btn btn-primary"
+          className="btn btn-outline-primary"
           type="submit"
           onClick={() => {
             const array = [...this.props.dataArray];
@@ -100,7 +101,7 @@ class SettingsFrame extends Component {
           Heap Sort
         </button>
         <button
-          className="btn btn-primary"
+          className="btn btn-outline-primary"
           type="submit"
           onClick={() => {
             const array = [...this.props.dataArray];
@@ -111,7 +112,7 @@ class SettingsFrame extends Component {
           Insertion Sort
         </button>
         <button
-          className="btn btn-primary"
+          className="btn btn-outline-primary"
           type="submit"
           onClick={() => {
             const array = [...this.props.dataArray];
