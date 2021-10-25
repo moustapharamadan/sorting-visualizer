@@ -40,7 +40,7 @@ async function merge(array, start, mid, end) {
   for (let k = start; k <= end; k++) {
     array[k] = tmp[k - start];
     store.dispatch(updateDataArray([...array]));
-    await sleep(10000 / array.size);
+    await sleep(1000 / array.length);
   }
   return array;
 }
@@ -57,5 +57,38 @@ async function mergeSortInternal(array, start, end) {
 export async function mergeSort(array) {
   store.dispatch(toggleIsSortRunning());
   await mergeSortInternal(array, 0, array.length - 1);
+  store.dispatch(toggleIsSortRunning());
+}
+
+async function swap(array, i, j) {
+  [array[i], array[j]] = [array[j], array[i]];
+  store.dispatch(updateDataArray([...array]));
+  await sleep(1000 / array.length);
+}
+
+async function partition(array, left, right) {
+  const pivot = array[right];
+  let i = left - 1;
+  for (let j = left; j < right; j++) {
+    if (array[j] < pivot) {
+      i++;
+      await swap(array, i, j);
+    }
+  }
+  await swap(array, i + 1, right);
+  return i + 1;
+}
+
+async function quickSortInternal(array, left, right) {
+  if (left < right) {
+    const pivot = await partition(array, left, right);
+    await quickSortInternal(array, left, pivot - 1);
+    await quickSortInternal(array, pivot + 1, right);
+  }
+}
+
+export async function quickSort(array) {
+  store.dispatch(toggleIsSortRunning());
+  await quickSortInternal(array, 0, array.length - 1);
   store.dispatch(toggleIsSortRunning());
 }
