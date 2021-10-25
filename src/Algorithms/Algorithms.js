@@ -111,3 +111,19 @@ export async function bubbleSort(array) {
   await bubbleSortInternal(array);
   store.dispatch(toggleIsSortRunning());
 }
+
+async function insertionSortInternal(array) {
+  for (let i = 1; i < array.length; ++i) {
+    for (let j = i; j > 0; --j) {
+      if (array[j] < array[j - 1]) {
+        await swap(array, j, j - 1);
+      }
+    }
+  }
+}
+
+export async function insertionSort(array) {
+  store.dispatch(toggleIsSortRunning());
+  await insertionSortInternal(array);
+  store.dispatch(toggleIsSortRunning());
+}
