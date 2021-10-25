@@ -2,7 +2,12 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import * as actions from "../Redux/actions";
-import { resetArray, mergeSort, quickSort } from "../Algorithms/Algorithms";
+import {
+  resetArray,
+  mergeSort,
+  quickSort,
+  bubbleSort,
+} from "../Algorithms/Algorithms";
 import Switch from "react-switch";
 
 class SettingsFrame extends Component {
@@ -92,7 +97,10 @@ class SettingsFrame extends Component {
         <button
           className="btn btn-primary"
           type="submit"
-          onClick={() => {}}
+          onClick={() => {
+            const array = [...this.props.dataArray];
+            bubbleSort(array);
+          }}
           disabled={this.props.isSortRunning}
         >
           Bubble Sort

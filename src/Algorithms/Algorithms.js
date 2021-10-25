@@ -92,3 +92,22 @@ export async function quickSort(array) {
   await quickSortInternal(array, 0, array.length - 1);
   store.dispatch(toggleIsSortRunning());
 }
+
+async function bubbleSortInternal(array) {
+  for (let i = 0; i < array.length - 1; ++i) {
+    let swapped = false;
+    for (let j = 0; j < array.length - i - 1; ++j) {
+      if (array[j] > array[j + 1]) {
+        await swap(array, j, j + 1);
+        swapped = true;
+      }
+    }
+    if (!swapped) break;
+  }
+}
+
+export async function bubbleSort(array) {
+  store.dispatch(toggleIsSortRunning());
+  await bubbleSortInternal(array);
+  store.dispatch(toggleIsSortRunning());
+}
