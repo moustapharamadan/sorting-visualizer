@@ -127,3 +127,32 @@ export async function insertionSort(array) {
   await insertionSortInternal(array);
   store.dispatch(toggleIsSortRunning());
 }
+
+async function heapify(array, n, i) {
+  const left = 2 * i + 1;
+  const right = 2 * i + 2;
+  let high = i;
+  if (left < n && array[left] > array[high]) high = left;
+  if (right < n && array[right] > array[high]) high = right;
+  if (i !== high) {
+    await swap(array, i, high);
+    await heapify(array, n, high);
+  }
+}
+
+export async function heapSortInternal(array) {
+  for (let i = array.length / 2 - 1; i >= 0; --i) {
+    await heapify(array, array.length, i);
+  }
+  console.log(array);
+  for (let i = array.length - 1; i > 0; --i) {
+    await swap(array, i, 0);
+    await heapify(array, i, 0);
+  }
+}
+
+export async function heapSort(array) {
+  store.dispatch(toggleIsSortRunning());
+  await heapSortInternal(array);
+  store.dispatch(toggleIsSortRunning());
+}

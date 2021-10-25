@@ -8,6 +8,7 @@ import {
   quickSort,
   bubbleSort,
   insertionSort,
+  heapSort,
 } from "../Algorithms/Algorithms";
 import Switch from "react-switch";
 
@@ -90,7 +91,10 @@ class SettingsFrame extends Component {
         <button
           className="btn btn-primary"
           type="submit"
-          onClick={() => {}}
+          onClick={() => {
+            const array = [...this.props.dataArray];
+            heapSort(array);
+          }}
           disabled={this.props.isSortRunning}
         >
           Heap Sort
