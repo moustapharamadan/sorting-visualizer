@@ -10,8 +10,9 @@ export default function reducer(state = initialState, action) {
     case types.UPDATE_DATA_ARRAY_SIZE:
       return { ...state, dataArraySize: action.dataArraySize };
     case types.IS_SORT_RUNNING:
-      debugger;
       return { ...state, isSortRunning: !state.isSortRunning };
+    case types.UPDATE_ALGORITHM:
+      return { ...state, algorithm: action.algorithm };
     default:
       return state;
   }

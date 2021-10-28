@@ -1,5 +1,6 @@
 import { store } from "../Redux/store";
 import { toggleIsSortRunning, updateDataArray } from "../Redux/actions";
+import * as types from "./AlgorithmTypes";
 
 function getRandomInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
@@ -54,10 +55,8 @@ async function mergeSortInternal(array, start, end) {
   }
 }
 
-export async function mergeSort(array) {
-  store.dispatch(toggleIsSortRunning());
+async function mergeSort(array) {
   await mergeSortInternal(array, 0, array.length - 1);
-  store.dispatch(toggleIsSortRunning());
 }
 
 async function swap(array, i, j) {
@@ -87,13 +86,11 @@ async function quickSortInternal(array, left, right) {
   }
 }
 
-export async function quickSort(array) {
-  store.dispatch(toggleIsSortRunning());
+async function quickSort(array) {
   await quickSortInternal(array, 0, array.length - 1);
-  store.dispatch(toggleIsSortRunning());
 }
 
-async function bubbleSortInternal(array) {
+async function bubbleSort(array) {
   for (let i = 0; i < array.length - 1; ++i) {
     let swapped = false;
     for (let j = 0; j < array.length - i - 1; ++j) {
@@ -106,13 +103,7 @@ async function bubbleSortInternal(array) {
   }
 }
 
-export async function bubbleSort(array) {
-  store.dispatch(toggleIsSortRunning());
-  await bubbleSortInternal(array);
-  store.dispatch(toggleIsSortRunning());
-}
-
-async function insertionSortInternal(array) {
+async function insertionSort(array) {
   for (let i = 1; i < array.length; ++i) {
     for (let j = i; j > 0; --j) {
       if (array[j] < array[j - 1]) {
@@ -120,12 +111,6 @@ async function insertionSortInternal(array) {
       }
     }
   }
-}
-
-export async function insertionSort(array) {
-  store.dispatch(toggleIsSortRunning());
-  await insertionSortInternal(array);
-  store.dispatch(toggleIsSortRunning());
 }
 
 async function heapify(array, n, i) {
@@ -140,7 +125,7 @@ async function heapify(array, n, i) {
   }
 }
 
-export async function heapSortInternal(array) {
+async function heapSort(array) {
   for (let i = array.length / 2 - 1; i >= 0; --i) {
     await heapify(array, array.length, i);
   }
@@ -151,8 +136,26 @@ export async function heapSortInternal(array) {
   }
 }
 
-export async function heapSort(array) {
+export async function algorithm(array, name) {
   store.dispatch(toggleIsSortRunning());
-  await heapSortInternal(array);
+  switch (name) {
+    case types.BUBBLE_SORT:
+      await bubbleSort(array);
+      break;
+    case types.HEAP_SORT:
+      await heapSort(array);
+      break;
+    case types.INSERTION_SORT:
+      await insertionSort(array);
+      break;
+    case types.MERGE_SORT:
+      await mergeSort(array);
+      break;
+    case types.QUICK_SORT:
+      await quickSort(array);
+      break;
+    default:
+      break;
+  }
   store.dispatch(toggleIsSortRunning());
 }

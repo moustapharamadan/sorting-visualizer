@@ -2,14 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import * as actions from "../Redux/actions";
-import {
-  resetArray,
-  mergeSort,
-  quickSort,
-  bubbleSort,
-  insertionSort,
-  heapSort,
-} from "../Algorithms/Algorithms";
+import { resetArray, algorithm } from "../Algorithms/Algorithms";
+import * as algorithmTypes from "../Algorithms/AlgorithmTypes";
 import Switch from "react-switch";
 
 class SettingsFrame extends Component {
@@ -22,7 +16,7 @@ class SettingsFrame extends Component {
         style={{
           display: "flex",
           margin: "0 5%",
-          marginBottom: "1%",
+          marginBottom: "0.5%",
         }}
       >
         <label>
@@ -30,6 +24,7 @@ class SettingsFrame extends Component {
           <Switch
             onChange={() => {
               this.props.togglePlotDirection();
+              this.props.updateAlgorithm(algorithmTypes.NAN);
             }}
             checked={this.props.isHorizontalDirection}
             className="react-switch"
@@ -52,6 +47,7 @@ class SettingsFrame extends Component {
               this.props.updateDataArray(
                 resetArray(parseInt(event.target.value))
               );
+              this.props.updateAlgorithm(algorithmTypes.NAN);
             }}
             disabled={this.props.isSortRunning}
           />
@@ -60,9 +56,10 @@ class SettingsFrame extends Component {
         <button
           className="btn btn-outline-primary"
           type="submit"
-          onClick={() =>
-            this.props.updateDataArray(resetArray(this.props.dataArraySize))
-          }
+          onClick={() => {
+            this.props.updateAlgorithm(algorithmTypes.NAN);
+            this.props.updateDataArray(resetArray(this.props.dataArraySize));
+          }}
           disabled={this.props.isSortRunning}
         >
           Generate New Array
@@ -71,8 +68,7 @@ class SettingsFrame extends Component {
           className="btn btn-outline-primary"
           type="submit"
           onClick={() => {
-            const array = [...this.props.dataArray];
-            mergeSort(array);
+            this.props.updateAlgorithm(algorithmTypes.MERGE_SORT);
           }}
           disabled={this.props.isSortRunning}
         >
@@ -82,8 +78,7 @@ class SettingsFrame extends Component {
           className="btn btn-outline-primary"
           type="submit"
           onClick={() => {
-            const array = [...this.props.dataArray];
-            quickSort(array);
+            this.props.updateAlgorithm(algorithmTypes.QUICK_SORT);
           }}
           disabled={this.props.isSortRunning}
         >
@@ -93,8 +88,7 @@ class SettingsFrame extends Component {
           className="btn btn-outline-primary"
           type="submit"
           onClick={() => {
-            const array = [...this.props.dataArray];
-            heapSort(array);
+            this.props.updateAlgorithm(algorithmTypes.HEAP_SORT);
           }}
           disabled={this.props.isSortRunning}
         >
@@ -104,8 +98,7 @@ class SettingsFrame extends Component {
           className="btn btn-outline-primary"
           type="submit"
           onClick={() => {
-            const array = [...this.props.dataArray];
-            insertionSort(array);
+            this.props.updateAlgorithm(algorithmTypes.INSERTION_SORT);
           }}
           disabled={this.props.isSortRunning}
         >
@@ -115,12 +108,23 @@ class SettingsFrame extends Component {
           className="btn btn-outline-primary"
           type="submit"
           onClick={() => {
-            const array = [...this.props.dataArray];
-            bubbleSort(array);
+            this.props.updateAlgorithm(algorithmTypes.BUBBLE_SORT);
           }}
           disabled={this.props.isSortRunning}
         >
           Bubble Sort
+        </button>
+        <button
+          className="btn btn-outline-primary"
+          type="submit"
+          onClick={() => {
+            const array = [...this.props.dataArray];
+            algorithm(array, this.props.algorithm);
+            this.props.updateAlgorithm(algorithmTypes.NAN);
+          }}
+          disabled={this.props.isSortRunning || this.props.algorithm === 0}
+        >
+          Start
         </button>
       </div>
     );
@@ -134,6 +138,7 @@ SettingsFrame.propTypes = {
   isSortRunning: PropTypes.bool.isRequired,
   updateDataArray: PropTypes.func.isRequired,
   togglePlotDirection: PropTypes.func.isRequired,
+  updateAlgorithm: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -142,6 +147,7 @@ const mapStateToProps = (state) => {
     dataArraySize: state.dataArraySize,
     isHorizontalDirection: state.isHorizontalDirection,
     isSortRunning: state.isSortRunning,
+    algorithm: state.algorithm,
   };
 };
 
@@ -149,6 +155,7 @@ const mapDispatchToProps = {
   updateDataArray: actions.updateDataArray,
   updateDataArraySize: actions.updateDataArraySize,
   togglePlotDirection: actions.togglePlotDirection,
+  updateAlgorithm: actions.updateAlgorithm,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SettingsFrame);

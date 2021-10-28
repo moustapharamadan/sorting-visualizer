@@ -4,4 +4,5 @@ export default {
   isHorizontalDirection: true,
   dataArraySize: 20,
   isSortRunning: false,
+  algorithm: 0,
 };

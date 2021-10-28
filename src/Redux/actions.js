@@ -15,3 +15,7 @@ export function updateDataArraySize(dataArraySize) {
 export function toggleIsSortRunning() {
   return { type: types.IS_SORT_RUNNING };
 }
+
+export function updateAlgorithm(algorithm) {
+  return { type: types.UPDATE_ALGORITHM, algorithm };
+}
