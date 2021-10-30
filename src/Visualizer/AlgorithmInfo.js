@@ -15,25 +15,25 @@ class AlgorithmInfo extends Component {
     {
       name: "Heap Sort",
       descirption:
-        "Merge Sort is a Divide and Conquer algorithm. It divides the input array into two halves, calls itself for the two halves, and then merges the two sorted halves",
+        "Merge sort is a Divide and Conquer algorithm. It divides the input array into two halves, calls itself for the two halves, and then merges the two sorted halves.",
       complexity: "O(n*Log n)",
     },
     {
       name: "Insertion Sort",
       descirption:
-        "Insertion sort performs sorting by transferring one element to a partially sorted array at a time",
+        "Insertion sort performs sorting by transferring one element to a partially sorted array at a time.",
       complexity: "O(n²)",
     },
     {
       name: "Merge Sort",
       descirption:
-        "Merge Sort is a divide-and-conquer algorithm. It divides the input array into two halves, calls itself for the two halves, and then merges the two sorted halves",
+        "Merge sort is a divide-and-conquer algorithm. It divides the input array into two halves, calls itself for the two halves, and then merges the two sorted halves.",
       complexity: "O(n*Log n)",
     },
     {
       name: "Quick Sort",
       descirption:
-        "Quicksort is a divide-and-conquer algorithm. It works by selecting a 'pivot' element from the array and partitioning the other elements into two sub-arrays, according to whether they are less than or greater than the pivot",
+        "Quick sort is a divide-and-conquer algorithm. It works by selecting a 'pivot' element from the array and partitioning the other elements into two sub-arrays, according to whether they are less than or greater than the pivot.",
       complexity: "O(n*Log n)",
     },
   ];
@@ -50,7 +50,11 @@ class AlgorithmInfo extends Component {
       <div style={{ width: "90%", margin: "auto", marginBottom: "0.5%" }}>
         <Collapse in={open}>
           <div id="collapse-text" class="card card-body">
-            {info.descirption}
+            <p>
+              {info.descirption}
+              <br />
+              Complexity: {info.complexity}
+            </p>
           </div>
         </Collapse>
       </div>
